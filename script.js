@@ -1,8 +1,7 @@
-// const lenis = new Lenis()
-const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
 const lenis = new Lenis({
-    smooth: !isIOS, // Вимкнути плавне прокручування на iOS
+    smooth: !isMobile, // Вимкнути плавне прокручування на iOS
     // smooth: true,
     // // lerp: 0.5, // Чим менше значення, тим повільніше скрол
     // // wheelMultiplier: 0.5, // Зменшує швидкість прокручування колесом миші
@@ -11,19 +10,17 @@ const lenis = new Lenis({
 });
 
 lenis.on('scroll', ({ velocity }) => {
-    // const maxVelocity = 30; // Встановіть максимальну швидкість скролу
-    // if (Math.abs(velocity) > maxVelocity) {
-    //     lenis.velocity = Math.sign(velocity) * maxVelocity;
-    // }
+
 });
 
-lenis.on('scroll', ScrollTrigger.update)
+lenis.on('scroll', ScrollTrigger.update())
 
 gsap.ticker.add((time) => {
     lenis.raf(time * 1000)
 })
 
 gsap.ticker.lagSmoothing(0)
+
 
 gsap.registerPlugin(ScrollTrigger);
 ScrollTrigger.config({ ignoreMobileResize: true, limitCallbacks: true });
@@ -33,9 +30,11 @@ let tl1 = gsap.timeline({
         trigger: '.section-1',
         scrub: true,
         pin: true,
+        // pinSpacing: false,
+        fastScrollEnd: true,
+        anticipatePin: 1,
         start: "top top",
         end: "+=200%",
-        anticipatePin: 1,
     }
 });
 
@@ -50,6 +49,9 @@ let tl2 = gsap.timeline({
         trigger: ".section-2",
         scrub: true,
         pin: true,
+        // pinSpacing: false,
+        fastScrollEnd: true,
+        anticipatePin: 1,
         start: "top top",
         end: "+=150%",
     }
@@ -65,6 +67,9 @@ let tl3 = gsap.timeline({
         trigger: ".section-3",
         scrub: true,
         pin: true,
+        // pinSpacing: false,
+        fastScrollEnd: true,
+        anticipatePin: 1,
         start: "top top",
         end: "+=150%",
     }
